@@ -781,25 +781,25 @@ const ContactForm = {
             submitBtnText.textContent = 'Sending...';
 
             const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                subject: document.getElementById('subject') ? document.getElementById('subject').value : '',
-                message: document.getElementById('message').value
+                name: document.getElementById('form-name').value,
+                email: document.getElementById('form-email').value,
+                subject: document.getElementById('form-subject') ? document.getElementById('form-subject').value : '',
+                message: document.getElementById('form-message').value
             };
 
-            fetch('/api/send-email', {
+            fetch('https://formspree.io/f/xlgkqkvg', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify(formData)
             })
-            .then(async (response) => {
+            .then((response) => {
                 if (response.ok) {
                     return response.json();
                 } else {
-                    const data = await response.json().catch(() => ({}));
-                    throw new Error(data.error || 'Failed to dispatch email.');
+                    throw new Error('Failed to dispatch email.');
                 }
             })
             .then(data => {
@@ -814,12 +814,7 @@ const ContactForm = {
             })
             .catch(error => {
                 console.error(error);
-                // Graceful fallback display for missing server-side variables vs actual server failure
-                if (error.message && error.message.includes('SMTP credentials')) {
-                    alert('SMTP server is not fully configured in your Vercel environment. Please set SMTP_USER and SMTP_PASS under Vercel project variables.');
-                } else {
-                    alert('Could not dispatch message. Please write to mohamed20020093@ksiu.edu.eg or call directly.');
-                }
+                alert('Could not dispatch message. Please write to mohamed20020093@ksiu.edu.eg or call directly.');
             })
             .finally(() => {
                 submitBtn.style.pointerEvents = 'auto';
