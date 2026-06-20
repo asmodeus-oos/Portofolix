@@ -809,12 +809,22 @@ a {
 /* Social Links */
 .hero-socials {
     display: flex;
+    flex-wrap: wrap; /* Prevent crowding/overflow by wrapping */
     gap: 16px;
 }
 
 @media (max-width: 991px) {
     .hero-socials {
         justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-socials {
+        gap: 12px;
+        justify-content: center;
+        max-width: 320px; /* Constrain width to wrap 6 icons into 2 rows of 3 */
+        margin: 20px auto 0 auto;
     }
 }
 
@@ -2654,6 +2664,15 @@ a {
     font-size: 1.05rem;
     font-weight: 500;
     color: var(--text-primary);
+    word-break: break-all; /* Prevent overflow by forcing email wrapping */
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+@media (max-width: 480px) {
+    .info-val {
+        font-size: 0.95rem; /* Downscale email size slightly to fit card width */
+    }
 }
 
 .contact-socials-wrapper {
@@ -2918,6 +2937,19 @@ textarea.glass-input-field {
 .copyright:hover {
     transform: scale(1.02);
     filter: drop-shadow(0 2px 10px rgba(var(--accent-blue-rgb), 0.25));
+}
+
+/* Footer Break line helper for mobile/tablets */
+.footer-mobile-br {
+    display: none;
+}
+
+@media (max-width: 991px) {
+    .footer-mobile-br {
+        display: block;
+        content: "";
+        margin-top: 4px;
+    }
 }
 
 .back-to-top-btn {
